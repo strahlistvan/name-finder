@@ -1,3 +1,5 @@
+var dictionary = getDictionary();
+
 function findAllWords(baseText, expectedLength) {
 
 	var allWords = [];	
@@ -5,20 +7,12 @@ function findAllWords(baseText, expectedLength) {
 	
 	baseText = baseText.toLowerCase().replace(/\s+/g, "");
 	
-	console.log("Béztext: " +baseText);
-	
-	dictionary = getDictionary();
 	
 	if (!dictionary) {
 		console.log("Dictionary not available");
-		return;
+		dictionary = getDictionary();
 	}
 		
-	console.log("Diksöneriszájz: "+dictionary.length);
-
-	console.log("Find all words running");
-
-
 	function findAll(baseText, currentWord) {
 		if (baseText.length === 0 || currentWord.length >= expectedLength) {
 			
@@ -30,24 +24,35 @@ function findAllWords(baseText, expectedLength) {
 		}
 		
 		//If exactly expectedLength needed
-	//	if (currentWord.length + baseText.length < expectedLength) {
-	//		return;
-	//	}
+		if (currentWord.length + baseText.length <= expectedLength) {
+			return;
+		}
 		
-		var firstChar = baseText.substring(0, 1);
+		var firstChar = baseText[0];
 		baseText = baseText.substring(1);
 		
 		findAll(baseText, currentWord + firstChar);
 		findAll(baseText, currentWord);
 			
 	}
-	
-	
+		
 	findAll(baseText, currentWord);
 	console.log("Find all words running Done. allWords.length = " + allWords.length);
 
 	return allWords;
 }
 
-//var allWordsTest = findAllWords("asdfg", 2);
-//console.log("Allwordstest :" + allWordsTest);
+function printAllNames(baseText, expectedLength) {
+
+	var allNames = [];
+	var resultDiv = document.getElementById("result");
+	resultDiv.innerHTML = "Please wait!";
+	
+	allNames = findAllWords(baseText, expectedLength);
+	resultDiv.innerHTML = "";
+	
+	for (var i=0; i<allNames.length; ++i) {
+		resultDiv.innerHTML += allNames[i] + "<br />";
+	}
+	
+}
