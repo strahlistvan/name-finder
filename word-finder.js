@@ -1,11 +1,15 @@
+
+
 function getDictionary() {
-	
-	var dictionary = [];
+
+	var dictionary = [];	
 	var xmlhttp = new XMLHttpRequest();
+	var done = false;
 	
 	xmlhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			
+			//done = false;
 			var respStr = this.responseText.toLowerCase().trim();
 			var respArr = respStr.split("\n");
 			respArr = respArr.map(function(curr) { 
@@ -18,9 +22,9 @@ function getDictionary() {
 			
 			document.body.innerHTML += JSON.stringify(respArr);
 			
-			dictionary.concat(respArr);
-			
-			
+			dictionary = respArr;
+			//done = true;
+			//return dictionary;
 			//console.log(this.responseText);
 			//var myObj = JSON.parse(this.responseText);
 			//document.getElementById("demo").innerHTML = myObj.name;
@@ -32,6 +36,9 @@ function getDictionary() {
 
 	xmlhttp.open("GET", "https://cors.io/?http://deron.meranda.us/data/census-derived-all-first.txt", false);
 	xmlhttp.send();
+
+	return dictionary;
+	
 }
 
 
@@ -71,6 +78,7 @@ function getDictionary() {
 allWordsTest = findAllWords("asdfg", 2);
 console.log("Allwordstest :" + allWordsTest);
 */
+
 
 function onclickhandler(baseText, expLength) {
 	alert("Hello World!"); 
