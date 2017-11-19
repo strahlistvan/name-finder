@@ -5,10 +5,22 @@
 		<meta charset="utf-8">
 	</head>
 	
-	<body onload=  "getDictionary()">
+	<body onload="findAllWords('abcde', 3)">
 		<h1>Árvíztűrő tükörfúrógép</h1>
-		<button type="button" id="findNamesBtn" > Click me! </button>
-		<script src="word-finder.js"> </script>
+		<form name="form01" action="#" method="GET" >
+			<label for="projectName"> Project Name : </label> 
+			<input  id="projectName" name="projectName" value="SmArt Room and heAting system" /> 
+			<label for="maxLength"> Abbrevation maximal length : </label> 
+			<input type="number" value="5" id="maxLength" name="maxLength" /> 
+			<input type="button" id="findNamesBtn" value="Click me!" onclick="findAllWords(document.forms[0].projectName.value, document.forms[0].maxLength.value)" /> <!-- onclick="onclickhandler(document.forms[0].projectName.value, document.forms[0].maxLength.value)" -->
+			
+		</form>
+		
+		<div id="result" > </div>
+		
+		
+		<script src="find-all-words.js"> </script>
+		<!-- script src="word-finder.js"> </script -->
 
 	</body>
 </html>
