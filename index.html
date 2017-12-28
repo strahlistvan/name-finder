@@ -5,30 +5,7 @@
 		<meta charset="utf-8">
 		<title>Find your perfect project abbrevation</title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />		
-				
-<style src="style.css" rel="stylesheet">
-.loader {
-  border: 16px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 16px solid #3498db;
-  width: 120px;
-  height: 120px;
-  -webkit-animation: spin 2s linear infinite;
-  animation: spin 2s linear infinite;
-  margin: 0 auto 0;
-}
-
-@-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-</style>	
-	
+		<link rel="stylesheet" href="style.css" />
 	</head>
 	
 	<body>
@@ -41,9 +18,17 @@
 						<input id="projectName" name="projectName" value="SmArt Room and heAting system" class="form-control"  placeholder="Project Name"  />  <br />
 					</div>				
 					<div class="form-group">	
-						<label for="maxLength"> Abbrevation maximal length : </label> 
-						<input id="maxLength" name="maxLength" type="number" value="5" class="form-control" placeholder="Abbrevation maximal length" />  <br />
-					</div>	
+						<label for="maxLength"> Abbrevation length : </label> 
+						<input id="maxLength" name="maxLength" type="number" value="5" class="form-control" placeholder="Abbrevation length" />  <br />
+					</div>
+					<div class="form-group">
+						<div class="radio">
+							<label> <input type="radio" name="limitType" value="exact" checked="checked" > Exact length </label>
+						</div>
+						<div class="radio">
+							<label> <input type="radio" name="limitType" value="maximal" > Maximal length </label>
+						</div>
+					</div>
 					<div class="form-group">
 						<input type="button" id="findNamesBtn" value="Search" class="btn btn-primary" title="Searching for project short project Names" onclick="printAllNames(document.forms[0].projectName.value, document.forms[0].maxLength.value)" />
 					</div>

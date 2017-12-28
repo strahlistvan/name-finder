@@ -1,4 +1,6 @@
 var dictionaryUrl = 'https://cors.io/?http://deron.meranda.us/data/census-derived-all-first.txt';
+
+//var dictionaryUrl = 'all_names.txt';
 var dictionary = [];
 var leafCount = 0;
 
@@ -51,7 +53,8 @@ function findAllWords(baseText, expectedLength) {
 		}
 		
 		//If exactly expectedLength needed
-		if (currentWord.length + baseText.length <= expectedLength) {
+		if (document.forms[0].limitType.value == "exact"
+			&& currentWord.length + baseText.length <= expectedLength) {
 			leafCount++;
 			return;
 		}
@@ -138,12 +141,16 @@ function printAllNames(baseText, expectedLength) {
 								 );
 			console.log(respArr);
 			
+
+			
 			dictionary = dictionary.concat(respArr);
 			allNames = findAllWords(baseText, expectedLength);
 			drawResultTable(allNames, resultElem, longProjectName);
 			
 		}
 		
+					console.log("response"+xmlhttp.getAllResponseHeaders());
+
 		//Error handling
 		if (this.status == 404) {
 			resultElem.innerHTML = "";
@@ -160,10 +167,6 @@ function printAllNames(baseText, expectedLength) {
 	
 	xmlhttp.open('GET', dictionaryUrl, true);
 	xmlhttp.send();
-	
-	
-	if (xmlhttp.status == 500) {
-		alert("Kakivan");
-	}
+	console.log("response XML = " + xmlhttp.responseXML);
 	
 }
