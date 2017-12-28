@@ -1,5 +1,4 @@
-var dictionary = getDictionary();
-var longProjectName;
+var dictionary = []; // = getDictionary();
 
 function getCheckedProjectName(shortName, longName) {
 	var j = 0;
@@ -72,15 +71,7 @@ function findAllWords(baseText, expectedLength) {
 	return allWords;
 }
 
-function printAllNames(baseText, expectedLength) {
-
-	var allNames = [];
-	var resultElem = document.getElementById("result");
-	resultElem.innerHTML = "Please wait!";
-	
-	longProjectName = baseText;
-	allNames = findAllWords(baseText, expectedLength);
-	
+function drawResultTable(allNames, resultElem, longProjectName) {
 	if (allNames.length === 0) {
 		resultElem.innerHTML = "No name found for "+longProjectName+" </ br>";
 	}
@@ -102,5 +93,47 @@ function printAllNames(baseText, expectedLength) {
 				
 	}
 	resultElem.appendChild(resTable);
+}
+
+function printAllNames(baseText, expectedLength) {
+
+	//dictionary = [];	
+	var xmlhttp = new XMLHttpRequest();
+	var done = false;
+
+	var allNames = [];
+	var resultElem = document.getElementById("result");
+	resultElem.innerHTML = "Please wait!";
+	
+	var longProjectName = baseText;
+	
+	xmlhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			
+			var respStr = this.responseText.toLowerCase().trim();
+			var respArr = respStr.split("\n");
+			
+			//The names are in the first column, separated with comma. We cut the rest of the strings.
+			respArr = respArr.map(function(curr) { 
+									if (curr.indexOf(" ") === -1) 
+										return curr.trim();
+									return curr.substring(0, curr.indexOf(" ")).trim(); 
+								   } 
+								 );
+			console.log(respArr);
+			
+			dictionary = dictionary.concat(respArr);
+			allNames = findAllWords(baseText, expectedLength);
+
+			drawResultTable(allNames, resultElem, longProjectName);
+			
+		}
+	};
+	
+//	xmlhttp.open("GET", "https://cors.io/?http://norvig.com/ngrams/enable1.txt", true);
+//	xmlhttp.send();
+	
+	xmlhttp.open("GET", "https://cors.io/?http://deron.meranda.us/data/census-derived-all-first.txt", true);
+	xmlhttp.send();
 	
 }
