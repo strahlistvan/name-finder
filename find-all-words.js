@@ -1,4 +1,4 @@
-var dictionary = []; // = getDictionary();
+var dictionary = [];
 
 function getCheckedProjectName(shortName, longName) {
 	var j = 0;
@@ -71,28 +71,48 @@ function findAllWords(baseText, expectedLength) {
 	return allWords;
 }
 
+/* Draws the result container table to the result HTML DOM element. */
 function drawResultTable(allNames, resultElem, longProjectName) {
 	if (allNames.length === 0) {
 		resultElem.innerHTML = "No name found for "+longProjectName+" </ br>";
 	}
 	else {
 		resultElem.innerHTML = "";
+		
+		var resTable = document.createElement("table");
+		resTable.className = "table table-striped";
+		
+		for (var i=0; i<allNames.length; ++i) {
+			var row = resTable.insertRow(-1);
+			
+			var  nameCell = row.insertCell(-1);
+			nameCell.innerHTML = allNames[i];
+			
+			var longNameCell = row.insertCell(-1)
+			longNameCell.innerHTML = getCheckedProjectName(allNames[i], longProjectName);
+					
+		}
+		
+		//Create a header
+		var header = resTable.createTHead();
+		//header.style = "font-weight: bold";
+		header.className = "thead-inverse";
+		var row_h = header.insertRow(0);
+		
+		var th1 = document.createElement("th");
+		th1.innerHTML = "Recommended Project Name";
+		var th2 = document.createElement("th");
+		th2.innerHTML = "Occurence in Full Project Name";
+
+		row_h.appendChild(th1);
+		row_h.appendChild(th2);
+		
+		//row_h.insertCell(0).innerHTML = "Recommended Project Name";
+		//row_h.insertCell(1).innerHTML = "Occurence in Full Project Name";
+
+		resultElem.appendChild(resTable);
 	}
 	
-	var resTable = document.createElement("table");
-	resTable.className = "table table-striped";
-	
-	for (var i=0; i<allNames.length; ++i) {
-		var row = resTable.insertRow(-1);
-		
-		var  nameCell = row.insertCell(-1);
-		nameCell.innerHTML = allNames[i];
-		
-		var longNameCell = row.insertCell(-1)
-		longNameCell.innerHTML = getCheckedProjectName(allNames[i], longProjectName);
-				
-	}
-	resultElem.appendChild(resTable);
 }
 
 function printAllNames(baseText, expectedLength) {
